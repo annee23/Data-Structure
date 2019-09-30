@@ -2,16 +2,9 @@
 #include<vector>
 using namespace std;
 struct Node {
-	Node* pa = NULL;
 	vector<int> ch;
 	int n = 0;
  };
-
-void push(int x) {
-	Node* newN = new Node;
-	newN->n = x;
-	
-}
 
 int main() {
 	int N, M;
