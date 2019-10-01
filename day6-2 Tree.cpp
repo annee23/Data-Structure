@@ -3,8 +3,9 @@
 using namespace std;
 struct Node {
 	Node* pa = NULL;
+	vector<Node*>ch;
 	int n = 0;
- };
+};
 
 int main() {
 	int N, M;
@@ -18,8 +19,8 @@ int main() {
 		v.push_back(newN);
 	}
 
-	for(int i=0;i<N;i++) {
-		int p,t;
+	for (int i = 0; i < N; i++) {
+		int p, t;
 		cin >> p;
 
 		while (1) {		//make children node
@@ -27,6 +28,7 @@ int main() {
 			if (t == 0)
 				break;
 			v[t - 1]->pa = v[p - 1];	//connect child and parent node
+			v[p - 1]->ch.push_back(v[t - 1]);	//connect parent and child node
 		}
 	}
 	for (int i = 0; i < M; i++) {
@@ -39,7 +41,17 @@ int main() {
 			it = it->pa;
 			count++;
 		}
-		cout << count << endl;
+		cout << count << "||";
+
+		int S = v[find - 1]->ch.size();		//print all child node
+		if (v[find - 1]->ch.empty())
+			cout << 0;
+		else {
+			for (int j = 0; j < S; j++) {
+				cout << v[find - 1]->ch[j]->n << " ";
+			}
+		}
+		cout << endl;
 	}
 	return 0;
 }
