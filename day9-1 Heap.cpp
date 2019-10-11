@@ -23,7 +23,7 @@ int main() {
 		newN->n = temp;
 		heap.push_back(newN);
 
-		if (heap.size()==0)
+		if (heap.size()==1)
 			root = last=newN;
 		else {
 			if (last->isL)
@@ -46,33 +46,17 @@ int main() {
 				last = newN;
 			}
 			//node insert
-			while (newN->n < newN->pa->n)
+			Node* it = newN;
+			while (it->pa!=NULL&&it->n < it->pa->n)
 			{
-				Node* parent = newN->pa;
-				newN->pa = parent->pa;
-				if (parent->isL)
-					parent->lc = newN;
-				else					
-				{
-					parent->rc = newN;
-					newN->isL=false;
-				}
-				if (newN->isL)
-				{
-					newN->lc = parent;
-					parent->pa = newN;
-					parent->isL = true;
-				}
-				else {
-					newN->lc = parent->lc;
-					parent->lc->pa = newN;
-					newN->rc = parent;
-					parent->pa = newN;
-					parent->isL = false;
-				}
+				int swap = it->n;
+				it->n = it->pa->n;
+				it->pa->n = swap;
+				it = it->pa;
 			}//swap
 		}
 	}
-	visit();
+	for (auto a : heap)
+		cout << a->n << " ";
 	return 0;
 }
