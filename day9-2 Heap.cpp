@@ -1,98 +1,68 @@
 #include<iostream>
+#include<string>
 #include<vector>
 using namespace std;
-
-struct Node {
-	Node* pa = NULL;
-	Node* lc = NULL;
-	Node* rc = NULL;
-	bool isL = false;
-	int n = 0;
-};
 int main() {
-	vector<Node*>heap;
-	Node* root = NULL;
-	Node* last = NULL;
-	int n;
-	cin >> n;
-	while (n--) {
-		int temp;
-		cin >> temp;
-
-		Node* newN = new Node;
-		newN->n = temp;
-		heap.push_back(newN);
-
-		if (heap.size()==1)
-			root = last=newN;
-		else {
-			if (last->isL)
+	int N;
+	cin >> N;
+	vector<int>heap;
+	heap.push_back(0);
+	while (N--) {
+		int num;
+		cin >> num;
+		heap.push_back(num);
+		for (int i = heap.size()-1; i>0; i=i/2)
+		{
+			if (heap[i] < heap[i / 2])
 			{
-				last->pa->rc = newN;
-				newN->pa = last->pa;
-				last = newN;
-			}
-			else
-			{
-				while (!(last->isL || last == root))
-					last = last->pa;
-				if(last!=root)
-					last = last->pa->rc;
-				while (last->lc!=NULL)
-					last = last->lc;
-				newN->isL = true;
-				last ->lc= newN;
-				newN->pa = last;
-				last = newN;
-			}
-			//node insert
-			Node* it = newN;
-			while (it->pa!=NULL&&it->n < it->pa->n)
-			{
-				int swap = it->n;
-				it->n = it->pa->n;
-				it->pa->n = swap;
-				it = it->pa;
-			}//swap
+				int temp = heap[i];
+				heap[i]= heap[i / 2];
+				heap[i / 2] = temp;
+			}//upheap
 		}
 	}
-	for (auto a : heap)
-		cout << a->n << " ";
-	cout<<endl;
-	//sort-start
-	vector<int>sorted;
-	vector<int>hp;		
-	hp.push_back(0);
-	for (auto a : heap)
-		hp.push_back(a->n);
-	while (hp.size()!=1) {
-		int idx = 1;
-		int swap = hp[1];			//swap root and last
-		hp[1] = hp[hp.size() - 1];
-		hp[hp.size() - 1] = swap;
-		sorted.push_back(swap);
-		hp.pop_back();
-		while (1) {		//down heap
-			if (idx * 2 >= hp.size() || (hp[idx] < hp[idx * 2] && idx*2+1==hp.size())||(hp[idx] < hp[idx * 2] && hp[idx] < hp[idx * 2 + 1]))
-				break;
-			if (idx*2+1==hp.size()||hp[idx * 2 + 1] > hp[idx * 2])
+	for (int i = 1; i < heap.size(); i++)
+		cout << heap[i] << " ";
+	cout << endl;
+
+	vector<int> sort;
+	while (1) {
+		sort.push_back(heap[1]);
+		heap[1] = heap[heap.size() - 1];
+		heap.pop_back();
+		if (heap.size() == 1)
+			break;
+		for (int i = 1; i * 2 <= heap.size() - 1;) {	//downheap
+			if (i * 2 + 1 == heap.size()) {		//자식이 왼쪽만 있을때
+				if (heap[i] > heap[i * 2]) {
+					int temp = heap[i * 2];
+					heap[i * 2] = heap[i];
+					heap[i] = temp;
+					break;
+				}
+				else
+					break;
+			}
+			else if (heap[i] > heap[i * 2] && heap[i * 2] < heap[i * 2 + 1]) //왼쪽자식 더 작을때
 			{
-				swap = hp[idx];
-				hp[idx] = hp[idx * 2];
-				hp[idx * 2] = swap;
-				idx = idx * 2;
+
+				int temp = heap[i * 2];
+				heap[i * 2] = heap[i];
+				heap[i] = temp;
+				i = i * 2;
+			}
+			else if (heap[i] > heap[i * 2 + 1] && heap[i * 2] > heap[i * 2 + 1]) { //오른쪽자식 더 작을때
+				int temp = heap[i * 2 + 1];
+				heap[i * 2 + 1] = heap[i];
+				heap[i] = temp;
+				i = i * 2 + 1;
 			}
 			else
-			{
-				swap = hp[idx];
-				hp[idx] = hp[idx * 2+1];
-				hp[idx * 2+1] = swap;
-				idx = idx * 2 + 1;
-			}
+				break;		//부모가 가장 작을때
 		}
 	}
-	//sort-finish
-	for (auto a : sorted)
+	for (auto a : sort)
 		cout << a << " ";
+	cout << endl;
 	return 0;
 }
