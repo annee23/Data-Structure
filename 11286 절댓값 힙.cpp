@@ -19,58 +19,63 @@ int main() {
 			heap.pop_back();
 			for (int i = 1; i * 2 < heap.size();) {
 				if (i * 2 + 1 == heap.size()) {
-					if (abs(heap[i]) > abs(heap[i * 2]) || (abs(heap[i]) == abs(heap[i * 2]) && heap[i] > heap[i * 2]))
+					if (abs(heap[i * 2]) < abs(heap[i]) || ((abs(heap[i * 2]) == abs(heap[i])) && (heap[i * 2] < heap[i])))
 					{
 						swap = heap[i];
 						heap[i] = heap[i * 2];
 						heap[i * 2] = swap;
+						break;
+					}
+					else break;
+				}
+				else if (abs(heap[i * 2]) == abs(heap[i * 2 + 1])&&( abs(heap[i])>abs(heap[i*2])) ){
+					if(heap[i*2]<=heap[i*2+1]) {
+						swap = heap[i];
+						heap[i] = heap[i * 2];
+						heap[i * 2] = swap;
+						i = i * 2;
 					}
 					else
-						break;
-				}
-				else {
-					if (abs(heap[i]) > abs(heap[i * 2]) && abs(heap[i * 2 + 1]) > abs(heap[i * 2]))//부모-왼 스왑
 					{
-						swap = heap[i];
-						heap[i] = heap[i * 2];
-						heap[i * 2] = swap;
-					}
-					else if (abs(heap[i]) > abs(heap[i * 2 + 1]) && abs(heap[i * 2 + 1]) < abs(heap[i * 2])) {//부모-오른 스왑
 						swap = heap[i];
 						heap[i] = heap[i * 2+1];
 						heap[i * 2+1] = swap;
+						i = i * 2+1;
 					}
-					else if (abs(heap[i * 2 + 1]) == abs(heap[i * 2]) && abs(heap[i]) > abs(heap[i * 2])) {//부모-자식중 절댓값 스왑
-						if (heap[i * 2] <= heap[i * 2 + 1]) {
-							swap = heap[i];
-							heap[i] = heap[i * 2 ];
-							heap[i * 2] = swap;
-						}
-						else{
-							swap = heap[i];
-							heap[i] = heap[i * 2 + 1];
-							heap[i * 2 + 1] = swap;
-						}
-					}
-					else if (abs(heap[i]) == abs(heap[i * 2])) {//부모-왼 절댓값 스왑
-						if (heap[i] > heap[i * 2]) {
-							swap = heap[i];
-							heap[i] = heap[i * 2];
-							heap[i * 2] = swap;
-						}
-					}
-					else if (abs(heap[i]) == abs(heap[i * 2 + 1])) {//부모-오른 절댓값 스왑
-						if (heap[i] > heap[i * 2+1]) {
-							swap = heap[i];
-							heap[i] = heap[i * 2 + 1];
-							heap[i * 2 + 1] = swap;
-						}
-					}
-					else
-						break;
 				}
+				else if (abs(heap[i * 2]) == abs(heap[i * 2 + 1]) && (abs(heap[i]) == abs(heap[i * 2]))) {
+					if (heap[i * 2] <= heap[i * 2 + 1] && heap[i * 2] < heap[i]) {
+						swap = heap[i];
+						heap[i] = heap[i * 2];
+						heap[i * 2] = swap;
+						i = i * 2;
+					}
+					else if (heap[i * 2] > heap[i * 2 + 1] && heap[i * 2 + 1] < heap[i])
+					{
+						swap = heap[i];
+						heap[i] = heap[i * 2 + 1];
+						heap[i * 2 + 1] = swap;
+						i = i * 2 + 1;
+					}
+					else break;
 				}
+				else if (abs(heap[i*2])<abs(heap[i*2+1])&& (abs(heap[i * 2]) < abs(heap[i]) || ((abs(heap[i * 2]) == abs(heap[i])) && (heap[i * 2] < heap[i])))) {
+					swap = heap[i];
+					heap[i] = heap[i * 2];
+					heap[i * 2] = swap;
+					i=i*2;
+					
+				}
+				else if (abs(heap[i * 2]) > abs(heap[i * 2 + 1]) && (abs(heap[i * 2+1]) < abs(heap[i]) || ((abs(heap[i * 2+1]) == abs(heap[i])) && (heap[i * 2+1] < heap[i])))) {
+					swap = heap[i];
+					heap[i] = heap[i * 2+1];
+					heap[i * 2+1] = swap;
+					i = i * 2+1;				
+				}
+				else
+					break;
 			}
+		}
 		else {//upheap
 			heap.push_back(t);
 			for (int i =heap.size()-1;i>0; i/=2)
