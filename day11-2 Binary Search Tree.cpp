@@ -40,7 +40,7 @@ void transPlant(Node* u, Node* v) {
 	else if (u == u->pa->ch[0])
 		u->pa->ch[0] = v;
 	else
-		u->pa->ch[1];
+		u->pa->ch[1]=v;
 	if (v != NULL)
 		v->pa = u->pa;
 }
