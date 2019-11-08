@@ -1,64 +1,30 @@
 #include<iostream>
 #include<vector>
 using namespace std;
-//5639
+
 struct Node {
 	Node* pa = NULL;
-	Node* ch[2] = { NULL, };
+	Node* ch1 = NULL;
+	Node* ch2 = NULL;
 	int n = 0;
 };
 Node* root = new Node;
-void pre(Node* N) {
-	cout << N->n << "\n";
-	if (N->ch[0] != NULL)
-		pre(N->ch[0]);
-	if (N->ch[1] != NULL)
-		pre(N->ch[1]);
-}
-void post(Node* N) {
-	if (N->ch[0] != NULL)
-		post(N->ch[0]);
-	if (N->ch[1] != NULL)
-		post(N->ch[1]);
-	cout << N->n << "\n";
-}
-void insert(int x, Node* N) {
-	if (N->n < x) {
-		if (N->ch[1] == NULL) {
-			Node* newN = new Node;
-			newN->n = x;
-			newN->pa = N;
-			N->ch[1] = newN;
-		}
-		else
-			insert(x, N->ch[1]);
-	}
-	else {
-		if (N->ch[0] == NULL) {
-			Node* newN = new Node;
-			newN->n = x;
-			newN->pa = N;
-			N->ch[0] = newN;
-		}
-		else
-			insert(x, N->ch[0]);
+void pre(vector<int>v) {
+	int tsize = v.size();
+	root->n = v[0];
+	for (int i = 1; i < tsize; i++) {
+		
 	}
 }
-int main() {
-	int t, n;
-	cin >> n;
-	bool roo = false;
-	while(n--) {
-		cin >> t;
-		if (!roo)
-		{
-			root->n = t;
-			roo = true;
-			continue;
-		}
-		insert(t, root);
-	}
-	pre(root);
-	post(root);
+void post() {
+
+}
+int main(){
+	int tmp = 0;
+	vector<int> v;
+	while (cin >> tmp) 
+		v.push_back(tmp);
+	pre(v);
+	post();
 	return 0;
 }
