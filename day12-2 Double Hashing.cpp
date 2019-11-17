@@ -7,11 +7,9 @@ struct item {
 };
 struct arr {
 	item* data = NULL;
-	bool flag = false;
+	bool flag = false;		//if arr has item
 };
 arr HashArr[353333];
-//int Max = 353333;
-//int sz=0;
 int hashfunc(int inp) {
 	return inp % 353333;
 }

@@ -7,17 +7,13 @@ struct item {
 };
 struct arr {
 	item* data = NULL;
-	bool flag = false;
+	bool flag = false;	//if arr has item
 };
 arr HashArr[353333];
-//int Max = 353333;
 int ct = 1;
 int hashfunc(int inp) {
 	return inp % 353333;
 }
-//int hashfunc2(int inp) {
-//	return (17 - (inp % 17));
-//}
 int main() {
 	int N, M, t;
 	cin >> N;
